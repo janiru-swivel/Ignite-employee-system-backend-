@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 
-const employeeSchema = new mongoose.Schema(
+// Updated the model name to 'User' instead of 'Employee'
+const userSchema = new mongoose.Schema(
   {
     firstName: {
       type: String,
@@ -47,4 +48,5 @@ const employeeSchema = new mongoose.Schema(
   }
 );
 
-export default mongoose.model("Employee", employeeSchema);
+// Exporting as 'User' to match the controller's usage
+export default mongoose.model("User", userSchema);

@@ -41,4 +41,4 @@ app.use(bodyParser.json());
 app.use(cors());
 
 // API routes
-app.use("/api", route);
+app.use("/api", route); // Use the route file for user-related operations

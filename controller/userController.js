@@ -1,4 +1,4 @@
-import User from "../model/userModel.js";
+import User from "../model/userModel.js"; // Ensure this points to the updated userModel.js
 
 // Create a new user
 export const create = async (req, res) => {

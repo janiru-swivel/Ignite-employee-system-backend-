@@ -1,21 +1,20 @@
 import mongoose from "mongoose";
 
-// Updated the model name to 'User' instead of 'Employee'
 const userSchema = new mongoose.Schema(
   {
     firstName: {
       type: String,
       required: [true, "First name is required"],
-      minlength: [6, "First name must be at least 6 characters long"],
-      maxlength: [10, "First name cannot exceed 10 characters"],
-      match: [/^[A-Za-z]+$/, "First name must only contain alphabets"],
+      minlength: [2, "First name must be at least 2 characters long"],
+      maxlength: [50, "First name cannot exceed 50 characters"],
+      match: [/^[A-Za-z\s]+$/, "First name must only contain alphabets"],
     },
     lastName: {
       type: String,
       required: [true, "Last name is required"],
-      minlength: [6, "Last name must be at least 6 characters long"],
-      maxlength: [10, "Last name cannot exceed 10 characters"],
-      match: [/^[A-Za-z]+$/, "Last name must only contain alphabets"],
+      minlength: [2, "Last name must be at least 2 characters long"],
+      maxlength: [50, "Last name cannot exceed 50 characters"],
+      match: [/^[A-Za-z\s]+$/, "Last name must only contain alphabets"],
     },
     email: {
       type: String,
@@ -30,8 +29,8 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: [true, "Phone number is required"],
       match: [
-        /^(?:\+94|0)?[1-9][0-9]{8}$/,
-        "Please enter a valid Sri Lankan phone number",
+        /^(?:\+\d{1,3})?[-.\s]?\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}$/,
+        "Please enter a valid phone number",
       ],
     },
     gender: {
@@ -42,11 +41,14 @@ const userSchema = new mongoose.Schema(
         message: "Gender must be either 'M' or 'F'",
       },
     },
+    profilePicture: {
+      type: String, // URL or path to the uploaded image
+      default: null,
+    },
   },
   {
     timestamps: true,
   }
 );
 
-// Exporting as 'User' to match the controller's usage
 export default mongoose.model("User", userSchema);

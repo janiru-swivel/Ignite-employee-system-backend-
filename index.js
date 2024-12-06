@@ -3,7 +3,6 @@ import mongoose from "mongoose";
 import bodyParser from "body-parser";
 import dotenv from "dotenv";
 import cors from "cors";
-import path from "path";
 import route from "./routes/userRoute.js";
 
 const app = express();
@@ -39,14 +38,7 @@ mongoose
 
 // Middleware
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
 
-// Serve static files from the 'public' directory
-app.use(
-  "/uploads",
-  express.static(path.join(process.cwd(), "public", "uploads"))
-);
-
 // API routes
-app.use("/api", route); // Use the route file for user-related operations
+app.use("/api", route);

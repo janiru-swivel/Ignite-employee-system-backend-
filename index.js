@@ -29,7 +29,13 @@ console.log("ENV ", process.env.CORS_ORIGIN);
 // Middleware
 app.use(helmet());
 app.use(morgan(process.env.NODE_ENV === "development" ? "dev" : "common"));
-app.use(cors({ origin: process.env.CORS_ORIGIN || "http://localhost:3000" }));
+app.use(
+  cors({
+    origin: "*",
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    allowedHeaders: "*",
+  })
+);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 

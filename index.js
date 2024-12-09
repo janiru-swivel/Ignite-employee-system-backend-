@@ -24,7 +24,7 @@ mongoose
     console.error("Database connection failed:", error.message);
     process.exit(1);
   });
-console.log(process.env.CORS_ORIGIN);
+console.log("ENV ", process.env.CORS_ORIGIN);
 
 // Middleware
 app.use(helmet());

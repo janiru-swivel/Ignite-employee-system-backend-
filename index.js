@@ -38,7 +38,7 @@ const corsOptions = {
 // Middleware
 app.use(helmet());
 app.use(morgan(process.env.NODE_ENV === "development" ? "dev" : "common"));
-app.use(cors(corsOptions));
+app.use(cors());
 //
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));

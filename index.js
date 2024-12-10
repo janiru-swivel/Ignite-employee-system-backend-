@@ -29,7 +29,7 @@ mongoose
 const corsOptions = {
   origin: [
     "http://localhost:3000",
-    "https://ignite-employee-system-frontend.vercel.app/",
+    "https://ignite-employee-system-frontend-3jaemuuqe.vercel.app/",
   ], // Allow these origins
   methods: ["*"], // Allow these methods
   allowedHeaders: ["Content-Type", "Authorization"], // Allow these headers

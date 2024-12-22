@@ -29,11 +29,19 @@ mongoose
 const corsOptions = {
   origin: [
     "http://localhost:3000",
+<<<<<<< Updated upstream
     "https://ignite-employee-system-frontend-3htm4ma9e.vercel.app/",
   ], // Allow these origins
   methods: ["*"], // Allow these methods
   allowedHeaders: ["Content-Type", "Authorization"], // Allow these headers
   credentials: true, // Allow cookies and other credentials
+=======
+    "https://ignite-employee-system-frontend.vercel.app/",
+  ],
+  methods: ["*"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+  credentials: true,
+>>>>>>> Stashed changes
 };
 // Middleware
 app.use(helmet());

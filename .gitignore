@@ -4,7 +4,6 @@ node_modules/
 # Ignore coverage folder
 coverage/
 
-# Ignore debug logs
 debug.log
 *.log
 

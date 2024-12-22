@@ -1,0 +1,20 @@
+{
+    "keep": {
+        "days": true,
+        "amount": 14
+    },
+    "auditLog": "D:\\Ignite_Project\\Ignite-employee-system-backend-\\logs\\.79ac1c87d91012a8f50f9b56c6f96a42fdbdbb30-audit.json",
+    "files": [
+        {
+            "date": 1734625199450,
+            "name": "D:\\Ignite_Project\\Ignite-employee-system-backend-\\logs\\2024-12-19-error.log",
+            "hash": "e84da682d2bc0faa6065181ee9ba36f19f99e9c8f943a83ab2715c6d9a6256f3"
+        },
+        {
+            "date": 1734850029500,
+            "name": "D:\\Ignite_Project\\Ignite-employee-system-backend-\\logs\\2024-12-22-error.log",
+            "hash": "2b25c4233711bae66cb13108bb2d2e4e61033881fa00505292d8beb5fdc28e67"
+        }
+    ],
+    "hashType": "sha256"
+}

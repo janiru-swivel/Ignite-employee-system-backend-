@@ -7,3 +7,5 @@ coverage/
 # Ignore debug logs
 debug.log
 *.log
+
+.env

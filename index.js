@@ -28,12 +28,13 @@ mongoose
     process.exit(1);
   });
 
+// CORS Configuration
 const corsOptions = {
   origin: [
     "http://localhost:3000",
-    "https://ignite-employee-system-frontend.vercel.app/",
+    "https://ignite-employee-system-frontend.vercel.app",
   ],
-  methods: ["*"],
+  methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
   allowedHeaders: ["Content-Type", "Authorization"],
   credentials: true,
 };
@@ -42,8 +43,21 @@ const corsOptions = {
 app.use(helmet());
 app.use(morgan("combined", { stream: morganStream }));
 app.use(cors(corsOptions));
+app.options("*", cors(corsOptions)); // Handle preflight requests
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
+// Add custom headers for all responses
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", req.headers.origin || "*");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept, Authorization"
+  );
+  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+  res.header("Access-Control-Allow-Credentials", "true");
+  next();
+});
 
 // Serve static files
 app.use(
@@ -106,12 +120,8 @@ process.on("SIGTERM", gracefulShutdown);
 function gracefulShutdown() {
   logger.info("Server shutting down gracefully...");
   server.close(() => {
-    mongoose.connection.close(false, (err) => {
-      if (err) {
-        logger.error("Error closing MongoDB connection during shutdown:", err);
-      } else {
-        logger.info("MongoDB connection closed.");
-      }
+    mongoose.connection.close(false, () => {
+      logger.info("MongoDB connection closed.");
       process.exit(0);
     });
   });
@@ -119,23 +129,12 @@ function gracefulShutdown() {
 
 // Handle uncaught exceptions
 process.on("uncaughtException", (error) => {
-  logger.error("Uncaught Exception:", {
-    message: error.message,
-    stack: error.stack,
-  });
-
-  // Attempt graceful shutdown
-  gracefulShutdown();
+  logger.error("Uncaught Exception:", error);
+  process.exit(1);
 });
 
 // Handle unhandled promise rejections
 process.on("unhandledRejection", (reason, promise) => {
-  logger.error("Unhandled Rejection:", {
-    reason: reason instanceof Error ? reason.message : String(reason),
-    stack: reason instanceof Error ? reason.stack : "No stack available",
-    promise,
-  });
-
-  // Attempt graceful shutdown
-  gracefulShutdown();
+  logger.error("Unhandled Rejection:", { reason, promise });
+  process.exit(1);
 });

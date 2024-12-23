@@ -106,8 +106,12 @@ process.on("SIGTERM", gracefulShutdown);
 function gracefulShutdown() {
   logger.info("Server shutting down gracefully...");
   server.close(() => {
-    mongoose.connection.close(false, () => {
-      logger.info("MongoDB connection closed.");
+    mongoose.connection.close(false, (err) => {
+      if (err) {
+        logger.error("Error closing MongoDB connection during shutdown:", err);
+      } else {
+        logger.info("MongoDB connection closed.");
+      }
       process.exit(0);
     });
   });
@@ -115,12 +119,23 @@ function gracefulShutdown() {
 
 // Handle uncaught exceptions
 process.on("uncaughtException", (error) => {
-  logger.error("Uncaught Exception:", error);
-  process.exit(1);
+  logger.error("Uncaught Exception:", {
+    message: error.message,
+    stack: error.stack,
+  });
+
+  // Attempt graceful shutdown
+  gracefulShutdown();
 });
 
 // Handle unhandled promise rejections
 process.on("unhandledRejection", (reason, promise) => {
-  logger.error("Unhandled Rejection:", { reason, promise });
-  process.exit(1);
+  logger.error("Unhandled Rejection:", {
+    reason: reason instanceof Error ? reason.message : String(reason),
+    stack: reason instanceof Error ? reason.stack : "No stack available",
+    promise,
+  });
+
+  // Attempt graceful shutdown
+  gracefulShutdown();
 });
